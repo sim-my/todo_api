@@ -17,9 +17,9 @@ export function getAllTodos(params) {
  * @param   {Number|String}  id
  * @returns {Promise}
  */
-export function getTodo(params) {
-  return new Todo(params)
-    .fetch()
+export function getTodos(params) {
+  return Todo.where(params)
+    .fetchAll()
     .then(todo => todo)
     .catch(Todo.NotFoundError, () => {
       throw Boom.notFound('Todo not found');
@@ -33,7 +33,7 @@ export function getTodo(params) {
  * @returns {Promise}
  */
 export function createTodo(todo) {
-  return new Todo({ item: todo.item, status: todo.status }).save();
+  return new Todo({ item: todo.item, status: todo.status, updated_at: new Date(), userId: todo.userId }).save();
 }
 
 /**
@@ -44,7 +44,7 @@ export function createTodo(todo) {
  * @returns {Promise}
  */
 export function updateTodo(id, todo) {
-  return new Todo({ id }).save({ item: todo.item, status: todo.status});
+  return new Todo({ id }).save({ item: todo.item, status: todo.status, updated_at: new Date(), userId: todo.userId });
 }
 
 /**

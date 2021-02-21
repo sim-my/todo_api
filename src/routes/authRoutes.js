@@ -15,9 +15,13 @@ router.post('/login', (req, res, next) => {
       if (data.err) {
         res.json({ msg: 'No such user' });
       }
-      if (data.data) {       
-        const token = generateAccessToken({ userId: data.data.attributes.id, email: data.data.attributes.email });
-        res.json({token});
+      if (data.data) {
+        if(bcrypt.compareSync(req.body.password, data.data.attributes.password))    {
+          const token = generateAccessToken({ userId: data.data.attributes.id, email: data.data.attributes.email });
+          res.json({token});
+        }else{          
+          res.json({msg:'Password mismatch'})
+        }        
       }
     })
     .catch((err) => {

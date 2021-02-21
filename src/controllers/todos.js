@@ -11,7 +11,7 @@ import * as todoService from '../services/todoService';
  */
 export function fetchAll(req, res, next, params) {  
   todoService
-    .getTodo(params)
+    .getTodos(params)
     .then(data => res.json({ data }))
     .catch(err => next(err));
 }
@@ -25,7 +25,7 @@ export function fetchAll(req, res, next, params) {
  */
 export function fetchById(req, res, next) {
   todoService
-    .getTodo(req.params.id)
+    .getTodos({id: req.params.id})
     .then(data => res.json({ data }))
     .catch(err => next(err));
 }
@@ -38,6 +38,7 @@ export function fetchById(req, res, next) {
  * @param {Function} next
  */
 export function create(req, res, next) {
+  req.body.userId = req.authData.userId;
   todoService
     .createTodo(req.body)
     .then(data => res.status(HttpStatus.CREATED).json({ data }))

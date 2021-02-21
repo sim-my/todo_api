@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const hash = bcrypt.hashSync(process.env.USER, 10)
+const hash = bcrypt.hashSync('leapfrog', 10)
 
 /**
  * Delete all existing entries and seed users table.

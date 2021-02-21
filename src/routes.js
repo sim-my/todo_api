@@ -42,9 +42,17 @@ function authenticateToken(req, res, next) {
   })
 }
 
+function authorize(req, res, next){
+  if(parseInt(req.params.userId) === req.authData.userId){
+    next()
+  }else{
+    res.json({msg: 'Unauthorized'})
+  }
+}
+
 router.use('/auth', authRoutes)
 
-router.use('/todos', authenticateToken, todoRoutes);
+router.use('/todos/:userId', authenticateToken, authorize, todoRoutes);
 
 router.use((err, req, res, next) => {
   res.json({

@@ -14,6 +14,12 @@ export function seed(knex) {
           status:'active',      
           userId: 1,    
           updated_at: new Date()
+        },
+        {
+          item: 'Drink Water',
+          status:'active',      
+          userId: 1,    
+          updated_at: new Date()
         }
       ]);
     });
